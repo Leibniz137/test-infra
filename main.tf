@@ -8,9 +8,10 @@ terraform {
   }
 }
 
+# TODO: make these configurable stored as vars
 provider "google" {
   //   credentials = file("<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY>.json")
   project = "firewall-426619"
   region  = "us-west2"
-  zone    = "us-central1-c"
+  zone    = "us-west2-c"
 }
