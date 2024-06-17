@@ -1,1 +1,7 @@
 .terraform*
+terraform.tfstate
+terraform.tfstate.backup
+
+# Ignore generated credentials from google-github-actions/auth
+# see: https://github.com/google-github-actions/auth/tree/v2/?tab=readme-ov-file#prerequisites
+gha-creds-*.json
