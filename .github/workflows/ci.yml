@@ -21,7 +21,8 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
-        workload_identity_provider: 'projects/firewall-426619/locations/global/workloadIdentityPools/github'
+        # workload_identity_provider: 'projects/firewall-426619/locations/global/workloadIdentityPools/github'
+        workload_identity_provider: 'projects/812684586228/locations/global/workloadIdentityPools/github/providers/github-provider'
         # TODO: make this configurable
         service_account: 'terraform-sa@firewall-426619.iam.gserviceaccount.com'
 
