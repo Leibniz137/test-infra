@@ -57,3 +57,8 @@ resource "google_iam_workload_identity_pool_provider" "sequencer_repo" {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
 }
+
+# 3. Get the full ID of the Workload Identity Pool
+output "workload_identity_pool_full_id" {
+  value = google_iam_workload_identity_pool.github.id
+}
