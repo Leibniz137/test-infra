@@ -33,3 +33,12 @@ jobs:
 
     - name: 'Use gcloud CLI'
       run: 'gcloud info'
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: 'terraform init'
+      run: 'terraform init'
+
+    - name: Terraform Format
+      run: 'terraform fmt -check'
