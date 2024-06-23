@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    # SECURITY: https://github.com/google-github-actions/auth/blob/v2/docs/SECURITY_CONSIDERATIONS.md
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
