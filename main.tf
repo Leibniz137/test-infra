@@ -17,7 +17,7 @@ provider "google" {
 }
 
 
-resource  "google_storage_bucket"  "test-bucket"  {
-  name      =  "test-bucket-9777"
-  location  =  "us-west2"
+resource "google_storage_bucket" "test-bucket" {
+  name     = "test-bucket-9777"
+  location = "us-west2"
 }
