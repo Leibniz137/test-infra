@@ -74,3 +74,21 @@ resource "google_iam_workload_identity_pool_provider" "sequencer_repo" {
 output "workload_identity_pool_provider_id" {
   value = google_iam_workload_identity_pool_provider.sequencer_repo.name
 }
+
+# fixes "IAM Service Account Credentials API has not been used in project 812684586228 before or it is disabled."
+resource "google_project_service" "iamcredentials" {
+  project = var.project_id
+
+  # service to enable
+  service = "iamcredentials.googleapis.com"
+
+  # If true, services that are enabled and which depend on this service should also be disabled when this service is destroyed.
+  # If false or unset, an error will be returned if any enabled services depend on this service when attempting to destroy it.
+  disable_dependent_services = false
+
+  # If true or unset, disable the service when the Terraform resource is destroyed.
+  # If false, the service will be left enabled when the Terraform resource is destroyed.
+  # Defaults to true. Most configurations should set this to false;
+  # it should generally only be true or unset in configurations that manage the google_project resource itself.
+  disable_on_destroy = false
+}
