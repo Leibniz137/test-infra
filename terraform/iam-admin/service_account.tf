@@ -5,6 +5,18 @@ resource "google_service_account" "terraform_sa" {
   display_name = "Terraform Service Account"
 }
 
+# roles/iam.serviceAccountTokenCreator role is required
+resource "google_project_iam_binding" "terraform_sa_binding" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+
+  members = [
+    "serviceAccount:${google_service_account.terraform_sa.email}",
+  ]
+}
+
+# TODO: need bucket + access for storing terraform state
+
 variable "github_org" {
   type    = string
   default = "Leibniz137"
