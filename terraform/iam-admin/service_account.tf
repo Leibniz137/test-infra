@@ -15,6 +15,27 @@ resource "google_project_iam_binding" "terraform_sa_binding" {
   ]
 }
 
+resource "google_project_iam_custom_role" "cicd_role" {
+  project     = var.project_id
+  role_id     = "cicd_role"
+  title       = "Role for CI/CD pipeline"
+  description = "A demo role with permissions for maintaining testnet"
+
+  permissions = [
+    "storage.buckets.create",
+    "storage.buckets.list",
+  ]
+}
+
+resource "google_project_iam_binding" "cicd_binding" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.cicd_role.id
+
+  members = [
+    "serviceAccount:${google_service_account.terraform_sa.email}",
+  ]
+}
+
 # TODO: need bucket + access for storing terraform state
 
 variable "github_org" {
