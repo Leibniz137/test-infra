@@ -76,14 +76,14 @@ resource "google_iam_workload_identity_pool_provider" "sequencer_repo" {
   workload_identity_pool_id          = var.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-provider"
 
-  project      = var.project_id
-  display_name = "My GitHub repo Provider"
-  description  = "Identity pool provider for automated test"
+  project             = var.project_id
+  display_name        = "My GitHub repo Provider"
+  description         = "Identity pool provider for automated test"
   attribute_condition = "assertion.repository_owner == '${var.github_org}'"
   attribute_mapping = {
-    "google.subject" = "assertion.sub"
-    "attribute.actor" = "assertion.actor"
-    "attribute.repository" = "assertion.repository"
+    "google.subject"             = "assertion.sub"
+    "attribute.actor"            = "assertion.actor"
+    "attribute.repository"       = "assertion.repository"
     "attribute.repository_owner" = "assertion.repository_owner"
   }
   oidc {
@@ -118,7 +118,7 @@ resource "google_project_service" "iamcredentials" {
 resource "google_service_account_iam_binding" "allow_impersonation" {
   service_account_id = google_service_account.terraform_sa.name
   role               = "roles/iam.workloadIdentityUser"
-  members            = [
+  members = [
     # TODO: interpolate project id variable 812...
     "principalSet://iam.googleapis.com/projects/812684586228/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github.workload_identity_pool_id}/attribute.repository_owner/${var.github_org}",
   ]
