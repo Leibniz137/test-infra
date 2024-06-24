@@ -35,6 +35,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "storage.buckets.list",
     "storage.buckets.get",
     "storage.objects.list",
+    "storage.objects.create",
     "storage.objects.delete",
     "storage.objects.get",
   ]
