@@ -15,9 +15,3 @@ provider "google" {
   region  = "us-west2"
   zone    = "us-west2-c"
 }
-
-# TODO: need a bucket containing state
-# resource  "google_storage_bucket"  "my-bucket"  {
-#   name        =  "my-bucket-123"
-#   location  =  "us-central1"
-# }
