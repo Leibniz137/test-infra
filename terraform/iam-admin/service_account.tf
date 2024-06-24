@@ -92,3 +92,13 @@ resource "google_project_service" "iamcredentials" {
   # it should generally only be true or unset in configurations that manage the google_project resource itself.
   disable_on_destroy = false
 }
+
+# fixes: "Permission 'iam.serviceAccounts.getAccessToken' denied on resource (or it may not exist)."
+resource "google_service_account_iam_binding" "allow_impersonation" {
+  service_account_id = google_service_account.terraform_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+  members            = [
+    # TODO: interpolate project id variable 812...
+    "principalSet://iam.googleapis.com/projects/812684586228/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github.workload_identity_pool_id}/attribute.repository_owner/${var.github_org}",
+  ]
+}
