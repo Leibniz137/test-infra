@@ -1,3 +1,12 @@
+// bucket for storing tf state
+
+resource "google_storage_bucket" "terraform_state" {
+  // 94439 is a random number
+  name     = "terraform-state-bucket-94439"
+  location = "us-west2"
+  storage_class = "standard"
+}
+
 // creates service account for use in github actions
 
 resource "google_service_account" "terraform_sa" {
