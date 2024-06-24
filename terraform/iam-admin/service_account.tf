@@ -49,14 +49,15 @@ resource "google_project_iam_binding" "cicd_binding" {
   ]
 }
 
-resource "google_project_iam_binding" "object_creator_sa_binding" {
-  project = var.project_id
-  role    = "roles/storage.objectCreator"
+# This doesn't seem to work...
+# resource "google_project_iam_binding" "object_creator_sa_binding" {
+#   project = var.project_id
+#   role    = "roles/storage.objectCreator"
 
-  members = [
-    "serviceAccount:${google_service_account.terraform_sa.email}",
-  ]
-}
+#   members = [
+#     "serviceAccount:${google_service_account.terraform_sa.email}",
+#   ]
+# }
 
 variable "github_org" {
   type    = string
