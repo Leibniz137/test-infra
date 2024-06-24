@@ -24,6 +24,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
   permissions = [
     "storage.buckets.create",
     "storage.buckets.list",
+    "storage.buckets.get",
   ]
 }
 
