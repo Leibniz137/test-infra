@@ -31,13 +31,17 @@ resource "google_project_iam_custom_role" "cicd_role" {
   description = "A demo role with permissions for maintaining testnet"
 
   permissions = [
-    "storage.buckets.create",
-    "storage.buckets.list",
-    "storage.buckets.get",
+    // permissions for accessing state bucket
     "storage.objects.list",
     "storage.objects.create",
     "storage.objects.delete",
     "storage.objects.get",
+    "storage.buckets.list",
+
+    // additional permissions for bucket creation / removal
+    "storage.buckets.create",
+    "storage.buckets.get",
+    "storage.buckets.delete",
   ]
 }
 
