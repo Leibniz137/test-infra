@@ -46,7 +46,14 @@ resource "google_project_iam_binding" "cicd_binding" {
   ]
 }
 
-# TODO: need bucket + access for storing terraform state
+resource "google_project_iam_binding" "object_creator_sa_binding" {
+  project = var.project_id
+  role    = "roles/storage.objectCreator"
+
+   members = [
+     "serviceAccount:${google_service_account.terraform_sa.email}",
+   ]
+ }
 
 variable "github_org" {
   type    = string
