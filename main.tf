@@ -19,8 +19,8 @@ provider "google" {
   zone    = "us-west2-c"
 }
 
-
-resource "google_storage_bucket" "test-bucket" {
-  name     = "test-bucket-9777"
-  location = "us-west2"
-}
+# test delete
+# resource "google_storage_bucket" "test-bucket" {
+#   name     = "test-bucket-9777"
+#   location = "us-west2"
+# }
