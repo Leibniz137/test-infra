@@ -2,8 +2,8 @@
 
 resource "google_storage_bucket" "terraform_state" {
   // 94439 is a random number
-  name     = "terraform-state-bucket-94439"
-  location = "us-west2"
+  name          = "terraform-state-bucket-94439"
+  location      = "us-west2"
   storage_class = "STANDARD"
 }
 
@@ -50,10 +50,10 @@ resource "google_project_iam_binding" "object_creator_sa_binding" {
   project = var.project_id
   role    = "roles/storage.objectCreator"
 
-   members = [
-     "serviceAccount:${google_service_account.terraform_sa.email}",
-   ]
- }
+  members = [
+    "serviceAccount:${google_service_account.terraform_sa.email}",
+  ]
+}
 
 variable "github_org" {
   type    = string
