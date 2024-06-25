@@ -140,6 +140,24 @@ resource "google_project_service" "iamcredentials" {
   disable_on_destroy = false
 }
 
+# fixes "Error 403: Compute Engine API has not been used in project firewall-426619 before or it is disabled."
+resource "google_project_service" "compute" {
+  project = var.project_id
+
+  # service to enable
+  service = "compute.googleapis.com"
+
+  # If true, services that are enabled and which depend on this service should also be disabled when this service is destroyed.
+  # If false or unset, an error will be returned if any enabled services depend on this service when attempting to destroy it.
+  disable_dependent_services = false
+
+  # If true or unset, disable the service when the Terraform resource is destroyed.
+  # If false, the service will be left enabled when the Terraform resource is destroyed.
+  # Defaults to true. Most configurations should set this to false;
+  # it should generally only be true or unset in configurations that manage the google_project resource itself.
+  disable_on_destroy = false
+}
+
 # fixes: "Permission 'iam.serviceAccounts.getAccessToken' denied on resource (or it may not exist)."
 resource "google_service_account_iam_binding" "allow_impersonation" {
   service_account_id = google_service_account.terraform_sa.name
