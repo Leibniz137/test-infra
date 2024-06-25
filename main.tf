@@ -29,7 +29,7 @@ provider "google" {
 resource "google_compute_instance" "f1_micro" {
   name         = "f1-micro-instance"
   machine_type = "f1-micro"
-  zone         = "us-west2-c"
+  zone         = "us-west2-a"
 
   boot_disk {
     initialize_params {
