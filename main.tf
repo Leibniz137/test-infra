@@ -25,20 +25,20 @@ provider "google" {
 #   location = "us-west2"
 # }
 
+# test delete vm
+# resource "google_compute_instance" "e2_micro" {
+#   name         = "e2-micro-instance"
+#   machine_type = "e2-micro"
+#   # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
+#   zone = "us-west1-a"
 
-resource "google_compute_instance" "e2_micro" {
-  name         = "e2-micro-instance"
-  machine_type = "e2-micro"
-  # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
-  zone = "us-west1-a"
+#   boot_disk {
+#     initialize_params {
+#       image = "debian-cloud/debian-11"
+#     }
+#   }
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-11"
-    }
-  }
-
-  network_interface {
-    network = "default"
-  }
-}
+#   network_interface {
+#     network = "default"
+#   }
+# }
