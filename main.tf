@@ -19,8 +19,25 @@ provider "google" {
   zone    = "us-west2-c"
 }
 
-# test delete
+# test delete bucket
 # resource "google_storage_bucket" "test-bucket" {
 #   name     = "test-bucket-9777"
 #   location = "us-west2"
 # }
+
+
+resource "google_compute_instance" "f1_micro" {
+  name         = "f1-micro-instance"
+  machine_type = "f1-micro"
+  zone         = "us-west2-c"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"
+  }
+}
