@@ -46,6 +46,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     // additional permissions for vm creation / removal
     "compute.disks.create",
     "compute.instances.create",
+    "compute.instances.get",
     "compute.subnetworks.use",
     "compute.zones.get",
   ]
