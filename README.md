@@ -1,5 +1,5 @@
 This repo triggers the automation creation of cloud resources in google.
-This repo requires initializing
+This repo requires initializing to allow github actions to manage GCP resources.
 
 
 # Initial Admin setup
@@ -27,6 +27,7 @@ terraform init
 ## 3. create service-accounts, roles, etc.
 ```
 # create service account for use in github actions pipeline
+# (NOTE: in terraform/iam-admin directory)
 terraform plan
 terraform apply
 ```
@@ -44,4 +45,3 @@ workload_identity_pool_provider_id = "projects/812684586228/locations/global/wor
 ```
 
 Copy the "workload_identity_pool_provider_id" output and set the `workload_identity_provider` field in the [.github/workflows/ci.yml](./.github/workflows/ci.yml) to this value.
-```
