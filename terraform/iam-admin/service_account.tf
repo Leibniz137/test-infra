@@ -42,6 +42,9 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "storage.buckets.create",
     "storage.buckets.get",
     "storage.buckets.delete",
+
+    // additional permissions for vm creation / removal
+    "compute.zones.get",
   ]
 }
 
