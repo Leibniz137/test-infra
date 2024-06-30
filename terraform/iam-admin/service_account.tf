@@ -44,6 +44,8 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "storage.buckets.delete",
 
     // additional permissions for vm creation / removal
+    "compute.addresses.create",
+    "compute.addresses.delete",
     "compute.disks.create",
     "compute.instances.create",
     "compute.instances.delete",
