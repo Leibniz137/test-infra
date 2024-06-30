@@ -11,12 +11,19 @@ terraform {
   }
 }
 
+variable region {
+  type = string
+  default = "us-west1"
+}
+
+locals {
+  zone = "${var.region}-a"
+}
+
 # TODO: make these configurable stored as vars
 provider "google" {
   //   credentials = file("<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY>.json")
   project = "firewall-426619"
-  region  = "us-west2"
-  zone    = "us-west2-c"
 }
 
 # test delete bucket
@@ -27,6 +34,7 @@ provider "google" {
 
 resource "google_compute_address" "static_ip" {
   name = "firewall"
+  region = var.region
 }
 
 # test delete vm
@@ -34,7 +42,7 @@ resource "google_compute_instance" "e2_micro" {
   name         = "e2-micro-instance"
   machine_type = "e2-micro"
   # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
-  zone = "us-west1-a"
+  zone = local.zone
 
   boot_disk {
     initialize_params {
