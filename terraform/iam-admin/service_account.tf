@@ -80,11 +80,6 @@ variable "github_org" {
   default = "Leibniz137"
 }
 
-variable "project_id" {
-  type    = string
-  default = "firewall-426619"
-}
-
 variable "workload_identity_pool_id" {
   type    = string
   default = "github"
@@ -174,7 +169,6 @@ resource "google_service_account_iam_binding" "allow_impersonation" {
   service_account_id = google_service_account.terraform_sa.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
-    # TODO: interpolate project id variable 812...
-    "principalSet://iam.googleapis.com/projects/812684586228/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github.workload_identity_pool_id}/attribute.repository_owner/${var.github_org}",
+    "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github.workload_identity_pool_id}/attribute.repository_owner/${var.github_org}",
   ]
 }
