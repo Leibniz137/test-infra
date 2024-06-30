@@ -47,11 +47,14 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "compute.addresses.create",
     "compute.addresses.delete",
     "compute.addresses.get",
+    "compute.instances.setMetadata",
+    "compute.addresses.use",
     "compute.disks.create",
     "compute.instances.create",
     "compute.instances.delete",
     "compute.instances.get",
     "compute.subnetworks.use",
+    "compute.subnetworks.useExternalIp",
     "compute.zones.get",
   ]
 }
