@@ -63,3 +63,7 @@ resource "google_compute_instance" "e2_micro" {
   }
 
 }
+
+output "static_ip_address" {
+  value = google_compute_address.static_ip.address
+}
