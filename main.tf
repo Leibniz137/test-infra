@@ -11,8 +11,8 @@ terraform {
   }
 }
 
-variable region {
-  type = string
+variable "region" {
+  type    = string
   default = "us-west1"
 }
 
@@ -33,7 +33,7 @@ provider "google" {
 # }
 
 resource "google_compute_address" "static_ip" {
-  name = "firewall"
+  name   = "firewall"
   region = var.region
 }
 
