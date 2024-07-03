@@ -74,6 +74,10 @@ resource "google_compute_instance" "e2_micro" {
 
     # Verify that the installation is successful by running the hello-world image:
     sudo docker run hello-world
+
+    # allow firewall user to run docker commands
+    sudo groupadd docker
+    sudo usermod -aG docker firewall
   EOF
 
   network_interface {
