@@ -50,6 +50,11 @@ resource "google_compute_instance" "e2_micro" {
     }
   }
 
+  metadata_startup_script = <<EOF
+    #!/bin/bash
+    sudo apt-get update
+  EOF
+
   network_interface {
     network = "default"
     access_config {
