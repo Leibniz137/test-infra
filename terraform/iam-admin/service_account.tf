@@ -68,6 +68,12 @@ resource "google_project_iam_binding" "cicd_binding" {
   ]
 }
 
+// service account to be used by virtual machine
+resource "google_service_account" "virtual_machine_sa" {
+  account_id   = "virtual-machine-sa"
+  display_name = "Virtual Machine Service Account"
+}
+
 # This doesn't seem to work...
 # resource "google_project_iam_binding" "object_creator_sa_binding" {
 #   project = var.project_id
