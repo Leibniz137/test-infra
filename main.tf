@@ -20,10 +20,15 @@ locals {
   zone = "${var.region}-a"
 }
 
+variable "project_id" {
+  type = string
+  default = "firewall-426619"
+}
+
 # TODO: make these configurable stored as vars
 provider "google" {
   //   credentials = file("<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY>.json")
-  project = "firewall-426619"
+  project = var.project_id
 }
 
 # test delete bucket
