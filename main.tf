@@ -32,6 +32,21 @@ provider "google" {
 #   location = "us-west2"
 # }
 
+data "google_service_account" "virtual_machine_sa" {
+  # NOTE: must match what is defined in admin terraform
+  account_id = "virtual-machine-sa"
+}
+
+resource "google_pubsub_topic" "test_infra" {
+  name = "test-infra-topic"
+
+  labels = {
+    test = "infra"
+  }
+
+  message_retention_duration = "86600s"
+}
+
 # resource "google_compute_address" "static_ip" {
 #   name   = "firewall"
 #   region = var.region
