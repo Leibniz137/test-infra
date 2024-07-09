@@ -21,7 +21,7 @@ locals {
 }
 
 variable "project_id" {
-  type = string
+  type    = string
   default = "firewall-426619"
 }
 
