@@ -74,6 +74,26 @@ resource "google_service_account" "virtual_machine_sa" {
   display_name = "Virtual Machine Service Account"
 }
 
+resource "google_project_iam_custom_role" "virtual_machine_role" {
+  role_id     = "virtual_machine_role"
+  title       = "Virtual machine role"
+  description = "Role for VMs to publish to Pub/Sub"
+
+  permissions = [
+    "pubsub.topics.publish",
+    # Add any other required permissions here
+  ]
+}
+
+resource "google_project_iam_binding" "vm_binding" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.virtual_machine_role.id
+
+  members = [
+    "serviceAccount:${google_service_account.virtual_machine_sa.email}",
+  ]
+}
+
 # This doesn't seem to work...
 # resource "google_project_iam_binding" "object_creator_sa_binding" {
 #   project = var.project_id
