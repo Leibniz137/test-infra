@@ -69,6 +69,24 @@ resource "google_project_iam_binding" "cicd_binding" {
   ]
 }
 
+// fixes:
+// │ Error: Error waiting for instance to create:
+// The user does not have access to service account 'virtual-machine-sa@firewall-426619.iam.gserviceaccount.com'.
+// User: 'terraform-sa@firewall-426619.iam.gserviceaccount.com'.
+// Ask a project owner to grant you the iam.serviceAccountUser role on the service account
+resource  "google_project_iam_binding" "sa_user_binding" {
+  project  =  var.project_id
+  role      =  "roles/iam.serviceAccountUser"
+
+  members  =  [
+    "serviceAccount:${google_service_account.terraform_sa.email}",
+  ]
+
+  depends_on  =  [
+    google_service_account.virtual_machine_sa,
+  ]
+}
+
 // service account to be used by virtual machine
 resource "google_service_account" "virtual_machine_sa" {
   account_id   = "virtual-machine-sa"
