@@ -114,7 +114,7 @@ resource "google_compute_instance" "e2_micro" {
   }
 
   service_account {
-    email = data.google_service_account.virtual_machine_sa.email
+    email  = data.google_service_account.virtual_machine_sa.email
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 
