@@ -53,12 +53,12 @@ data "google_service_account" "virtual_machine_sa" {
 #   message_retention_duration = "86600s"
 # }
 
-# resource "google_compute_address" "static_ip" {
-#   name   = "firewall"
-#   region = var.region
-# }
+resource "google_compute_address" "static_ip" {
+  name   = "firewall"
+  region = var.region
+}
 
-# # test delete vm
+# test delete vm
 resource "google_compute_instance" "e2_micro" {
   name         = "e2-micro-instance"
   machine_type = "e2-micro"
