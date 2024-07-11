@@ -48,6 +48,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "compute.addresses.delete",
     "compute.addresses.get",
     "compute.instances.setMetadata",
+    "compute.instances.setServiceAccount",
     "compute.addresses.use",
     "compute.disks.create",
     "compute.instances.create",
