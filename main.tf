@@ -65,6 +65,20 @@ data "google_service_account" "virtual_machine_sa" {
 #   # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
 #   zone = local.zone
 
+
+  # /*
+  # Fixes (which wasn't encountered in this repo, only in iac repo 🤔):
+  # ╷
+  # │ Error: Changing the machine_type, min_cpu_platform, service_account, enable_display, shielded_instance_config, scheduling.node_affinities or network_interface.[#d].(network/subnetwork/subnetwork_project) or advanced_machine_features on a started instance requires stopping it. To acknowledge this, please set allow_stopping_for_update = true in your config. You can also stop it by setting desired_status = "TERMINATED", but the instance will not be restarted after the update.
+  # │
+  # │   with google_compute_instance.e2_micro,
+  # │   on main.tf line 51, in resource "google_compute_instance" "e2_micro":
+  # │   51: resource "google_compute_instance" "e2_micro" {
+  # │
+  # ╵
+  # */
+  # allow_stopping_for_update = true
+
 #   boot_disk {
 #     initialize_params {
 #       image = "debian-cloud/debian-11"
