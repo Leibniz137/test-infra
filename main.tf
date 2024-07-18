@@ -32,7 +32,7 @@ provider "google" {
 }
 
 // ssh keys to access VM
-variable ssh_public_keys {
+variable "ssh_public_keys" {
   type = list(string)
   default = [
     "firewall:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCuF4IYOJjN65jbw4gbyjpmrwuuUNkTWJ4PiMXW4rgiq2iwpgdaxz6UCq3LtOpG0+lYuLFhDiuSCA9DRQsktGStt9+jJDvjVD3RJZpBJedusZNQJ1RnC8/jje8KQjjbFOJXcBxyLP96jzi112lh/qUCjk8cMgiUg3xGQq/esY7125oiZFVELL85EvCfAGSh3Y8Gy6BWRw/rjxJ2A9pn0jd9c2WbgclekCpUB7QFmAdD33vx6vbGwIImNoM+a63Hh/wyjWhTRJoO8s++I1NeaAK2xwNa02dxX5KWEXKaHTNaSV1WzO9Dp0iJ/t+RaMusnEZVl6yG9uPW8WDnDUA4zSfCcd0VIKpi+yhoRy2JxidoqVUqrREMVneo0P2StXd8ARzm2dGwgGg36td+Ge+eOrG3DvorYR9NvJzmLPbahvNz85bar6uK7Q7Ay8nB86O4AQgpPHuHG+Dy4LWJpQOGldnOkEkTFeRo0iqCcqIy+wezkn7/6y+5Ev2oC0gcIp/RRDOpRih94Wewp+wiI2mKxYFlGYPVv/g+WcrrujwvVhkQVEW0qH0qJQXvmEE6rDprGY/G/soD1Zj8RnzmjFBdCgstGxYzEvkMLnKc2w0z54bMheW13D8J9VWc5i1Ky2s0DUHdbaP7P7yKwBpRxvjLFSFTSHoHwyRFY0PjpVOq9o1rQ== iac-automation",
