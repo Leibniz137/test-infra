@@ -52,6 +52,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "compute.instances.stop",
     "compute.addresses.use",
     "compute.disks.create",
+    "compute.instances.addAccessConfig",
     "compute.instances.create",
     "compute.instances.delete",
     "compute.instances.deleteAccessConfig",
