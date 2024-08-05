@@ -49,6 +49,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "compute.addresses.get",
     "compute.firewalls.create",
     "compute.firewalls.delete",
+    "compute.firewalls.get",
     "compute.instances.setMetadata",
     "compute.instances.setServiceAccount",
     "compute.instances.stop",
