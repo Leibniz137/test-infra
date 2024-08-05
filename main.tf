@@ -62,88 +62,166 @@ data "google_service_account" "virtual_machine_sa" {
 #   message_retention_duration = "86600s"
 # }
 
-# resource "google_compute_address" "static_ip" {
-#   name   = "firewall"
-#   region = var.region
-# }
+resource "google_compute_address" "static_ip" {
+  name   = "firewall"
+  region = var.region
+}
 
 
 # test delete vm
-# resource "google_compute_instance" "e2_micro" {
-#   name         = "e2-micro-instance"
-#   machine_type = "e2-micro"
-#   # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
-#   zone = local.zone
-# 
-# 
-#   /*
-#   Fixes (which wasn't encountered in this repo, only in iac repo 🤔):
-#   ╷
-#   │ Error: Changing the machine_type, min_cpu_platform, service_account, enable_display, shielded_instance_config, scheduling.node_affinities or network_interface.[#d].(network/subnetwork/subnetwork_project) or advanced_machine_features on a started instance requires stopping it. To acknowledge this, please set allow_stopping_for_update = true in your config. You can also stop it by setting desired_status = "TERMINATED", but the instance will not be restarted after the update.
-#   │ 
-#   │   with google_compute_instance.e2_micro,
-#   │   on main.tf line 51, in resource "google_compute_instance" "e2_micro":
-#   │   51: resource "google_compute_instance" "e2_micro" {
-#   │ 
-#   ╵
-#   */
-#   allow_stopping_for_update = true
-# 
-#   boot_disk {
-#     initialize_params {
-#       image = "debian-cloud/debian-11"
-#     }
-#   }
-# 
-#   metadata_startup_script = <<EOF
-#     #!/bin/bash
-# 
-#     # installation directions here: https://docs.docker.com/engine/install/debian/
-# 
-#     # Add Docker's official GPG key:
-#     sudo apt-get update
-#     sudo apt-get install -y ca-certificates curl
-#     sudo install -m 0755 -d /etc/apt/keyrings
-#     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-#     sudo chmod a+r /etc/apt/keyrings/docker.asc
-# 
-#     # Add the repository to Apt sources:
-#     echo \
-#       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-#       $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-#     sudo apt-get update
-# 
-#     # To install the latest version, run:
-#     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-# 
-#     # Verify that the installation is successful by running the hello-world image:
-#     sudo docker run hello-world
-# 
-#     # allow firewall user to run docker commands
-#     sudo groupadd docker
-#     sudo usermod -aG docker firewall
-#   EOF
-# 
-#   network_interface {
-#     network = "default"
-#     access_config {
-#       nat_ip = google_compute_address.static_ip.address
-#     }
-#   }
-# 
-#   metadata = {
-#     username = "firewall"
-#     ssh-keys = join(" \n", var.ssh_public_keys)
-#   }
-# 
-#   service_account {
-#     email  = data.google_service_account.virtual_machine_sa.email
-#     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
-#   }
-# 
-# }
-# 
-# output "static_ip_address" {
-#   value = google_compute_address.static_ip.address
-# }
+resource "google_compute_instance" "e2_micro" {
+  name         = "e2-micro-instance"
+  machine_type = "e2-micro"
+  # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
+  zone = local.zone
+
+
+  /*
+  Fixes (which wasn't encountered in this repo, only in iac repo 🤔):
+  ╷
+  │ Error: Changing the machine_type, min_cpu_platform, service_account, enable_display, shielded_instance_config, scheduling.node_affinities or network_interface.[#d].(network/subnetwork/subnetwork_project) or advanced_machine_features on a started instance requires stopping it. To acknowledge this, please set allow_stopping_for_update = true in your config. You can also stop it by setting desired_status = "TERMINATED", but the instance will not be restarted after the update.
+  │ 
+  │   with google_compute_instance.e2_micro,
+  │   on main.tf line 51, in resource "google_compute_instance" "e2_micro":
+  │   51: resource "google_compute_instance" "e2_micro" {
+  │ 
+  ╵
+  */
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  metadata_startup_script = <<EOF
+    #!/bin/bash
+
+    # installation directions here: https://docs.docker.com/engine/install/debian/
+
+    # Add Docker's official GPG key:
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+
+    # To install the latest version, run:
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # Verify that the installation is successful by running the hello-world image:
+    sudo docker run hello-world
+
+    # allow firewall user to run docker commands
+    sudo groupadd docker
+    sudo usermod -aG docker firewall
+  EOF
+
+  network_interface {
+    network = "default"
+    access_config {
+      nat_ip = google_compute_address.static_ip.address
+    }
+  }
+
+  metadata = {
+    username = "firewall"
+    ssh-keys = join(" \n", var.ssh_public_keys)
+  }
+
+  service_account {
+    email  = data.google_service_account.virtual_machine_sa.email
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+  tags = ["testnet", "sequencer"]
+
+}
+
+output "static_ip_address" {
+  value = google_compute_address.static_ip.address
+}
+
+resource "google_compute_instance" "e2_micro_replica" {
+  name         = "e2-micro-instance-replica"
+  machine_type = "e2-micro"
+  # see: https://cloud.google.com/free/docs/free-cloud-features#always-free-usage-limits
+  zone = local.zone
+
+
+  /*
+  Fixes (which wasn't encountered in this repo, only in iac repo 🤔):
+  ╷
+  │ Error: Changing the machine_type, min_cpu_platform, service_account, enable_display, shielded_instance_config, scheduling.node_affinities or network_interface.[#d].(network/subnetwork/subnetwork_project) or advanced_machine_features on a started instance requires stopping it. To acknowledge this, please set allow_stopping_for_update = true in your config. You can also stop it by setting desired_status = "TERMINATED", but the instance will not be restarted after the update.
+  │ 
+  │   with google_compute_instance.e2_micro,
+  │   on main.tf line 51, in resource "google_compute_instance" "e2_micro":
+  │   51: resource "google_compute_instance" "e2_micro" {
+  │ 
+  ╵
+  */
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  metadata_startup_script = <<EOF
+    #!/bin/bash
+
+    # installation directions here: https://docs.docker.com/engine/install/debian/
+
+    # Add Docker's official GPG key:
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+
+    # To install the latest version, run:
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # Verify that the installation is successful by running the hello-world image:
+    sudo docker run hello-world
+
+    # allow firewall user to run docker commands
+    sudo groupadd docker
+    sudo usermod -aG docker firewall
+  EOF
+
+  network_interface {
+    network = "default"
+    access_config {
+      nat_ip = google_compute_address.static_ip.address
+    }
+  }
+
+  metadata = {
+    username = "firewall"
+    ssh-keys = join(" \n", var.ssh_public_keys)
+  }
+
+  # service_account {
+  #   email  = data.google_service_account.virtual_machine_sa.email
+  #   scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  # }
+
+  tags = ["testnet", "replica"]
+
+}

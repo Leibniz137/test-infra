@@ -55,6 +55,7 @@ resource "google_project_iam_custom_role" "cicd_role" {
     "compute.instances.create",
     "compute.instances.delete",
     "compute.instances.get",
+    "compute.instances.setTags",
     "compute.subnetworks.use",
     "compute.subnetworks.useExternalIp",
     "compute.zones.get",
