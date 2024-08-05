@@ -217,10 +217,10 @@ resource "google_compute_instance" "e2_micro_replica" {
     ssh-keys = join(" \n", var.ssh_public_keys)
   }
 
-  service_account {
-    email  = data.google_service_account.virtual_machine_sa.email
-    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
-  }
+  # service_account {
+  #   email  = data.google_service_account.virtual_machine_sa.email
+  #   scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  # }
 
   tags = ["testnet", "replica"]
 
