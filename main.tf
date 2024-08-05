@@ -67,6 +67,11 @@ resource "google_compute_address" "static_ip" {
   region = var.region
 }
 
+resource "google_compute_address" "static_ip_replica" {
+  name   = "firewall-replica"
+  region = var.region
+}
+
 
 # test delete vm
 resource "google_compute_instance" "e2_micro" {
@@ -208,7 +213,7 @@ resource "google_compute_instance" "e2_micro_replica" {
   network_interface {
     network = "default"
     access_config {
-      nat_ip = google_compute_address.static_ip.address
+      nat_ip = google_compute_address.static_ip_replica.address
     }
   }
 
